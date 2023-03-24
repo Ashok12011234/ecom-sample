@@ -1,14 +1,34 @@
-import React, {useEffect} from 'react';
+import React, {useEffect,useState} from 'react';
 import { Container, Button, Table }  from 'react-bootstrap';
+import { Header } from 'rsuite';
 
 export default function Admin() {
     useEffect(() => {
         document.title = "Admin | PetStore"
     }, []);
 
+    const [orders, setItems] = useState([])
+  
+
+
+  useEffect(() => {
+    fetch('http://localhost:8000/backend')
+       .then((res) => res.json())
+       .then((data) => {
+          console.log(data);
+          setItems(data)
+       })
+       .catch((err) => {
+          console.log(err.message);
+         
+       });
+ }, []);
+
+
     return (
         <>
         <Container className="mt-5">
+            <Header>Response of external api call backend server made is : {orders}</Header>
             <Table bordered hover>
                 <thead>
                     <tr>
